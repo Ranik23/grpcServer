@@ -28,7 +28,7 @@ func New(t *testing.T) (context.Context, *Suite) {
 	t.Helper()
 	t.Parallel()
 
-	cfg := config.MustLoadPath("localhost:4040")
+	cfg := config.MustLoadPath("/home/anton/sso/config/local.yaml")
 
 	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.TimeOut)
 
