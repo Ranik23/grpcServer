@@ -1,6 +1,6 @@
 env : "local"
 
-storage_path : "./internal/storage/sso.db"
+storage_path : "/home/anton/sso/internal/storage/sso.db"
 
 token_ttl : 1h
 
