@@ -37,11 +37,15 @@ func Register(gRPC *grpc.Server, auth Auth) {
 func (s *ServerAPI) Login(ctx context.Context, req *ssov1.LoginRequest) (*ssov1.LoginResponse, error) {
 
 	if req.GetEmail() == "" {
-		return nil, status.Error(codes.InvalidArgument,"email is empty")
+		return nil, status.Error(codes.InvalidArgument,"email is required")
 	}
 
 	if req.GetPassword() == "" {
-		return nil, status.Error(codes.InvalidArgument, "password is empty")
+		return nil, status.Error(codes.InvalidArgument, "password is required")
+	}
+
+	if req.GetAppId() == valueEmpty {
+		return nil, status.Error(codes.InvalidArgument, "app_id is required")
 	}
 
 	token, err := s.auth.Login(ctx, req.GetEmail(), req.GetPassword(), int(req.GetAppId()))
