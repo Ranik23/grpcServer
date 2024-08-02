@@ -161,6 +161,7 @@ func (a *Auth) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 		slog.String("op: ", op),
 		slog.Int64("userID: ", userID),
 	)
+	
 	log.Info("starting checking")
 
 

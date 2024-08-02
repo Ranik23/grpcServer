@@ -22,6 +22,7 @@ func main() {
 	flag.StringVar(&migrationsPath, "migrations-path", "", "path to migrations")
 	flag.StringVar(&migrationsTable, "migrations-table", "migrations", "name of migrations")
 	flag.Parse()
+	
 
 	if storagePath == "" {
 		panic("storage path is required")
