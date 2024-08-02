@@ -35,9 +35,11 @@ func New(storagePath string) (*Storage, error) {
 
 
 func (a *Storage) SaveUser(ctx context.Context, email string, passHash []byte) (int64, error) {
+
 	const op = "storage.sqlite.SaveUser" 
 
 	statement, err := a.db.Prepare("INSERT INTO users(email, pass_hash) VALUES(?, ?)")
+	
 	if err != nil {
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}
@@ -96,7 +98,7 @@ func (a *Storage) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	const op = "storage.sqlite.IsAdmin"
 
 
-	statement, err := a.db.Prepare("SELECT IsAdmin FROM users WHERE id == ?")
+	statement, err := a.db.Prepare("SELECT is_admin FROM users WHERE id == ?")
 
 	if err != nil {
 		return false, fmt.Errorf("%s: %w", op, err)
