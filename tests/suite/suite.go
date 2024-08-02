@@ -3,7 +3,6 @@ package suite
 import (
 	"context"
 	"net"
-	"os"
 	"strconv"
 	"testing"
 
@@ -31,18 +30,17 @@ func New(t *testing.T) (context.Context, *Suite) {
 	t.Helper()
 	t.Parallel()
 
-	cfg := config.MustLoadPath(configPath())
+	cfg := config.MustLoadPath("localhost:4040")
 
-	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.Timeout)
+	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.TimeOut)
 
 	t.Cleanup(func() {
 		t.Helper()
 		cancelCtx()
 	})
 
-	cc, err := grpc.NewClient
-		grpcAddress(cfg),
-		grpc.WithTransportCredentials(insecure.NewCredentials())) // Используем insecure-коннект для тестов
+	cc, err := grpc.NewClient(net.JoinHostPort(grpcHost, strconv.Itoa(cfg.GRPC.Port)), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	
 	if err != nil {
 		t.Fatalf("grpc server connection failed: %v", err)
 	}
