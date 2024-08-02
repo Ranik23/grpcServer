@@ -112,7 +112,7 @@ func (a *Auth) Login(
 	token, err := jwt.NewToken(user, app, a.tokenTTL)
 
 	if err != nil {
-		a.log.Error("failed to generate token", status.Error(codes.Internal, ""))
+		a.log.Error("failed to generate token", err) //status.Error(codes.Internal, ""))
 
 		return "", fmt.Errorf("%s %w", op, err)
 	}
@@ -144,7 +144,7 @@ func (a *Auth) RegisterNewUser(ctx context.Context, email string, pass string) (
 	id, err := a.usrSaver.SaveUser(ctx, email, passHash)
 
 	if err != nil {
-		log.Error("failed to save user", status.Errorf(codes.Internal, ""))
+		log.Error("failed to save user", err) //status.Errorf(codes.Internal, ""))
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}
 
@@ -167,7 +167,7 @@ func (a *Auth) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	isAdmin, err := a.usrProvider.IsAdmin(ctx, userID)
 
 	if err != nil {
-		log.Error("failed to check", status.Error(codes.Internal, ""))
+		log.Error("failed to check", err) //status.Error(codes.Internal, ""))
 		return false, fmt.Errorf("%s %w", op, err)
 	}
 
